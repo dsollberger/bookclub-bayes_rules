@@ -103,6 +103,7 @@ ggplot(post_sample, aes(x = pi_grid)) +
 ## Beta-Binomial (MCMC)
 
 ```{r, results='hide'}
+#| eval: false
 # define model in stan language
 bb_model <- "
   data {
@@ -126,6 +127,7 @@ bb_sim <- stan(model_code = bb_model, data = list(Y = 9),
 - Result is a *stanfit* object, which can be used to extract the samples
 
 ```{r}
+#| eval: false
 # for examining using view
 chains <- as.data.frame(as.array(bb_sim, pars = "pi"))
 # look at a zoom in of the sample trace
@@ -137,6 +139,7 @@ mcmc_trace(bb_sim, pars = "pi", window = c(50,100),size =0.1)
 - We can also plot the resulting distribution of samples (book shows that this is close to beta-binomial expected)
 
 ```{r}
+#| eval: false
 mcmc_dens(bb_sim, pars = "pi") + 
   yaxis_text(TRUE) + 
   ylab("density")
@@ -155,18 +158,21 @@ mcmc_dens(bb_sim, pars = "pi") +
 - Effective sample size takes into account the correlation between samples. (best if > 10% of actual samples)
 
 ```{r}
+#| eval: false
 neff_ratio(bb_sim, pars = c("pi"))
 ```
 
 - Autocorrelation measures the correlation between pairs of Markov chain values that are *Lag* “steps” apart 
 
 ```{r}
+#| eval: false
 mcmc_acf(bb_sim, pars = "pi")
 ```
 
 - R-hat is the ratio of the variability between chains to the variability within chains. R-hat > 1.05 is cause for concern.
 
 ```{r}
+#| eval: false
 rhat(bb_sim, pars="pi")
 ```
 
